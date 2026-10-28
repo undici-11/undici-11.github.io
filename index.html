@@ -479,12 +479,7 @@ main{position:relative}
 
   function positionStage(){
     const rect=wrapEl.getBoundingClientRect();
-    // stage 本身高 170px，貓咪貼在 stage 底部；用底部座標反推 stage 的 top，
-    // 避免平板較高的版面把貓咪推到可視畫面之外。
-    const stageHeight=stage.offsetHeight||170;
-    const maxTop=Math.max(0,window.innerHeight-stageHeight-8);
-    const desiredTop=rect.bottom-stageHeight+4;
-    stage.style.top=Math.max(0,Math.min(desiredTop,maxTop))+'px';
+    stage.style.top=Math.max(0,rect.bottom-4)+'px';
     stage.style.left=(rect.left+rect.width/2)+'px';
   }
 
@@ -545,9 +540,6 @@ main{position:relative}
     }
   },{passive:true});
   window.addEventListener('resize',function(){
-    if(isCatVisible)positionStage();
-  },{passive:true});
-  window.addEventListener('orientationchange',function(){
     if(isCatVisible)positionStage();
   },{passive:true});
 
