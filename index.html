@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>十一｜自介</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Serif+Devanagari:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --ink:#070405; --panel:#0e0708; --blood:#a3121a; --cinnabar:#d4222b; --dried:#3a0a0e; --paper:#e8d9c4; --dim:#9c8a7c;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; color:var(--paper); background:var(--ink);
+  background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(163,18,26,.28),transparent 70%);
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif; line-height:1.85; font-size:16px;
+}
+main{max-width:620px; margin:0 auto; padding:0 20px 56px}
+
+/* 符紙 */
+.rope{width:2px;height:44px;margin:0 auto;background:linear-gradient(var(--dried),var(--blood))}
+.talisman-wrap{display:flex;justify-content:center;transform-origin:top center;animation:sway 7s ease-in-out infinite}
+.talisman{
+  position:relative; width:132px; padding:22px 0 26px;
+  background:var(--cinnabar); color:var(--ink); text-align:center;
+  box-shadow:0 0 38px rgba(212,34,43,.45), inset 0 0 0 4px var(--cinnabar), inset 0 0 0 6px var(--ink);
+}
+.talisman::before,.talisman::after{content:"";position:absolute;left:0;right:0;height:10px;background:
+  conic-gradient(from -45deg at 50% 0,transparent 90deg,var(--ink) 0) 0 0/20px 10px}
+.talisman::after{bottom:-1px;transform:scaleY(-1)}
+.talisman::before{top:-1px;display:none}
+.talisman h1{margin:0 auto;font-weight:900;font-size:60px;line-height:1.15;letter-spacing:.08em;writing-mode:vertical-rl;text-orientation:upright}
+.talisman small{display:block;margin-top:14px;font-size:11px;letter-spacing:.3em;font-weight:600}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+
+.mantra{margin:34px 0 6px;text-align:center;color:var(--dim);font-family:"Noto Serif Devanagari","Noto Serif TC",serif;font-size:14px;line-height:1.9}
+.hello{margin:0 0 6px;text-align:center;font-size:22px;font-weight:600;letter-spacing:.12em}
+.lotus{text-align:center;color:var(--blood);letter-spacing:.5em;margin:14px 0 4px}
+
+/* 區塊 */
+section{position:relative;margin-top:30px;padding:26px 22px 22px;background:var(--panel);border:1px solid var(--dried)}
+section::before{content:"";position:absolute;left:-1px;top:-1px;width:18px;height:18px;border-top:2px solid var(--cinnabar);border-left:2px solid var(--cinnabar)}
+section::after{content:"";position:absolute;right:-1px;bottom:-1px;width:18px;height:18px;border-bottom:2px solid var(--cinnabar);border-right:2px solid var(--cinnabar)}
+h2{margin:-44px 0 16px;display:inline-block;padding:3px 14px 3px 16px;background:var(--blood);color:var(--paper);font-size:15px;font-weight:900;letter-spacing:.5em}
+p{margin:0 0 10px}
+.plain{list-style:none;margin:0;padding:0}
+.plain li{padding-left:1.1em;position:relative}
+.plain li::before{content:"";position:absolute;left:0;top:.65em;width:9px;height:9px;border-radius:50%;background:linear-gradient(var(--panel),var(--panel)) center/3px 3px no-repeat,var(--blood)}
+.plain ul{list-style:none;margin:2px 0 6px;padding-left:1em;color:var(--dim)}
+.plain ul li::before{background-color:var(--dried)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chips span{padding:2px 11px;border:1px solid var(--blood);font-size:14px;line-height:1.7;color:var(--paper)}
+.chips span.hot{background:var(--dried)}
+.note{margin-top:14px;padding:12px 14px;border-left:3px solid var(--cinnabar);color:var(--dim);font-size:14px;line-height:1.8}
+
+.btn{display:inline-block;margin-top:6px;padding:10px 20px;background:var(--cinnabar);color:var(--ink);font-weight:900;letter-spacing:.2em;text-decoration:none}
+.btn:hover{background:var(--paper)}
+a:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+
+.bar{display:flex;align-items:center;gap:10px;margin-top:6px;color:var(--dim);font-size:14px}
+.bar i{flex:1;max-width:220px;height:8px;background:var(--dried);position:relative}
+.bar i::after{content:"";position:absolute;inset:0 90% 0 0;background:var(--cinnabar)}
+
+.no li::before{content:"✘";background:none;transform:none;color:var(--cinnabar);top:0;font-size:13px;width:auto;height:auto}
+.no li{padding-left:1.5em}
+
+footer{margin-top:40px;text-align:center;color:var(--dim);font-size:14px;letter-spacing:.3em}
+footer b{display:block;color:var(--blood);font-size:12px;margin-top:8px;letter-spacing:.5em}
+
+.coin{display:block;width:24px;height:24px;flex:none}
+.chain{position:relative;display:flex;align-items:center;justify-content:center;gap:24px;margin:34px 0 0}
+.chain::before{content:"";position:absolute;left:6%;right:6%;top:50%;height:2px;margin-top:-1px;background:var(--blood)}
+.chain .coin{position:relative}
+footer .chain{margin:0 0 22px}
+.about{margin:10px 0 0;text-align:center;font-size:15px;line-height:1.9}
+.about p{margin:0 0 10px}
+.about .pets{color:var(--dim)}
+.about em{font-style:normal;color:var(--blood)}
+.tag{position:absolute;top:-16px;right:22px;padding:10px 7px 16px;background:var(--cinnabar);color:var(--ink);font-size:15px;font-weight:900;line-height:1.25;letter-spacing:.1em;writing-mode:vertical-rl;text-orientation:upright;transform:rotate(3deg);box-shadow:inset 0 0 0 2px var(--cinnabar),inset 0 0 0 3px var(--ink);clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 6px),0 100%)}
+.no ul li::before{background:none}
+.tag{transform-origin:50% 0;animation:flutter 3.8s ease-in-out infinite}
+section:last-of-type .tag{animation-duration:4.6s;animation-delay:-2.2s}
+@keyframes flutter{0%,100%{transform:rotate(4deg) skewX(2deg)}25%{transform:rotate(-2deg) skewX(-3deg)}50%{transform:rotate(3deg) skewX(1deg) scaleY(.98)}75%{transform:rotate(-4deg) skewX(-2deg)}}
+@media (prefers-reduced-motion:reduce){.talisman-wrap,.tag,section:last-of-type .tag{animation:none}}
+@media (min-width:640px){body{font-size:17px}.talisman{width:150px}.talisman h1{font-size:68px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="coin" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18.5" fill="#2a0c0c" stroke="#a3121a" stroke-width="2"/><circle cx="20" cy="20" r="15.5" fill="none" stroke="#a3121a" stroke-width=".8" opacity=".6"/><rect x="14.5" y="14.5" width="11" height="11" fill="none" stroke="#d4222b" stroke-width="1.6"/><g font-size="7" fill="#d4222b" text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900"><text x="20" y="10.5">十</text><text x="31" y="23">一</text><text x="20" y="35">通</text><text x="9" y="23">寶</text></g></symbol></defs></svg>
+<main>
+  <div class="rope" aria-hidden="true"></div>
+  <div class="talisman-wrap">
+    <div class="talisman">
+      <h1>十一</h1>
+      <small>Undici</small>
+    </div>
+  </div>
+
+  <p class="mantra">तान्यतीतानि दीर्घनीरसदुःस्वप्न इव आसन्।</p>
+  <p class="hello">「你好，我是十一。」</p>
+  <div class="lotus" aria-hidden="true">༺🪷༻</div>
+
+  <div class="about">
+    <p>來自馬來西亞<br>與「長離」為同居情侶關係</p>
+    <p class="pets">共同飼養：<br><em>↳</em> 狐狐：長樂<br><em>↳</em> 橘貓：長安</p>
+  </div>
+
+  <section>
+    <h2>行蹤</h2>
+    <p>一年出 cos 約兩次。<br>友限文多為嚎夢向 × 現生照片 × 法醫日常碎片。</p>
+    <p style="margin-top:16px">目前深坑於：</p>
+    <div class="chips">
+      <span>BJD</span><span>野良神</span><span>殺破狼</span><span>地獄樂</span><span>惡魔人</span><span>漢尼拔</span><span>阿凡達</span><span>陰陽師</span><span>老九門</span><span>紙嫁衣</span><span>一夢江湖</span><span>無期迷途</span><span>盜墓筆記</span><span>道詭異仙</span><span>頭七怪談</span><span>燕雲十六聲</span><span>RPG像素恐怖遊戲</span><span>Wednesday Addams family</span>
+      <span class="hot">All 梵語歌、藏語歌、閩南語歌</span>
+      <span class="hot">All 中式恐怖、中式怪力亂神美學</span>
+    </div>
+    <p style="color:var(--dim);font-size:14px;margin-bottom:0">※ 遊戲与小說均在涉獵中</p>
+    <div class="note">欢迎推荐各種中恐作品、梵語歌、藏語歌，我真的會原地跳高360度大旋轉後空翻手捧999朵玫瑰嘴叼DR鑽戒向你求婚並愛死你的 🫶🏻❤️‍🔥</div>
+  </section>
+
+  <section>
+    <h2>夢向</h2>
+    <ul class="plain">
+      <li>無期迷途｜九十九 夢女<br><span style="color:var(--dim);font-size:14px">但這不影響我嗑海拉和她（為什麼我們三個不能一起.jpg）</span></li>
+      <li>GL夢向｜諾媗｜律師 × 法醫</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="tag" aria-hidden="true">契約</span>
+    <h2>委託</h2>
+    <p>OC屍檢報告委託</p>
+    <a class="btn" href="https://undici-11.github.io/OC-Autopsy-Report-Commission/" target="_blank" rel="noopener noreferrer">前往委託頁</a>
+  </section>
+
+  <section>
+    <h2>來往</h2>
+    <p>直戳歡迎，會審核，不強迫自介。</p>
+    <p style="margin-bottom:4px">基本不刪友，除非：</p>
+    <ul class="plain">
+      <li>三觀衝突</li>
+      <li>系統誤刪</li>
+    </ul>
+  </section>
+
+  <div class="chain" aria-hidden="true"><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg></div>
+
+  <section>
+    <h2>界線</h2>
+    <p style="color:var(--dim);font-size:14px">以下是本人可能會引起你不適的成分，请自行规避。</p>
+    <ul class="plain">
+      <li>現實有同居對象，偶爾出現沙雕閃光內容</li>
+      <li>語言混用：中國用語 / 支語 / 簡繁混寫（例：假發、蓬松）</li>
+      <li>職業法醫，偶爾分享過往案件經過，含黑色幽默 / 地獄笑話（不代表我對死者不敬；不雙標，版上也很多關於自己的地獄笑話）
+        <ul><li>若加我是為了了解法醫相關知識與案件，還請移步至 IG［undici_0011］，我通常會發在 IG 快拍，極少發在 FB</li></ul>
+      </li>
+      <li>偶有G向繪圖 / 血腥道具展示</li>
+      <li>回信息速度：
+        <div class="bar"><i></i><span>10%</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="tag" aria-hidden="true">封印</span>
+    <h2>禁忌</h2>
+    <ul class="plain no">
+      <li>KY</li>
+      <li>简体字歧视
+        <ul><li>语言≠立场，请尊重差异</li></ul>
+      </li>
+      <li>任何耽改劇</li>
+      <li>色情/淫穢話題</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="chain" aria-hidden="true"><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg><svg class="coin"><use href="#coin"/></svg></div>
+    持续待更 ✎<br>感谢阅读
+    <b>未　盡</b>
+  </footer>
+</main>
+</body>
+</html>
