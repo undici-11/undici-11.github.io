@@ -135,6 +135,54 @@ main{position:relative}
 .talisman.open small{width:100%;margin-top:8px;padding:0 8px;font-size:clamp(11px,3.1vw,12.5px);letter-spacing:.02em;line-height:1.9;white-space:pre-line}
 @media (prefers-reduced-motion:reduce){.talisman-wrap,.talisman.shake,.tag,section:last-of-type .tag,.cat .eye,.cat .tail,.altar.on .coin-btn .coin,.altar.on .stick::after{animation:none}}
 @media (min-width:640px){body{font-size:17px}.talisman{width:150px}.talisman .word{font-size:68px}}
+
+/* 大凶擋煞小貓：固定在視窗最上層，避免被香爐等元素遮住 */
+.blessing-stage{
+  position:fixed;top:0;left:50%;
+  width:min(340px,calc(100vw - 40px));height:170px;
+  transform:translateX(-50%);pointer-events:none;z-index:2147483647;
+}
+.blessing-cat-wrap{
+  position:absolute;right:4px;bottom:0;
+  display:flex;flex-direction:column;align-items:flex-end;
+  opacity:0;visibility:hidden;transform:translateX(42px);
+  transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .3s ease,visibility .45s;
+}
+.blessing-cat-wrap.show{opacity:1;visibility:visible;transform:translateX(0)}
+.blessing-cat-wrap.leaving{opacity:0;visibility:hidden;transform:translateX(36px);transition:transform .3s ease-in,opacity .22s ease,visibility .3s}
+.blessing-bubble{
+  position:relative;width:min(256px,calc(100vw - 64px));margin-bottom:6px;padding:10px 12px;
+  background:rgba(14,7,8,.96);border:1px solid var(--cinnabar);
+  box-shadow:0 6px 22px rgba(0,0,0,.8),inset 0 0 0 1px var(--dried);
+  color:var(--paper);font-size:13px;line-height:1.65;text-align:left;
+  opacity:0;transform:translateY(6px) scale(.97);
+  transition:opacity .28s ease .15s,transform .28s ease .15s;pointer-events:none;
+}
+.blessing-cat-wrap.show .blessing-bubble{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.blessing-cat-wrap.leaving .blessing-bubble{opacity:0;transform:translateY(4px);transition:opacity .15s ease,transform .15s ease;pointer-events:none}
+.blessing-bubble:after{
+  content:"";position:absolute;right:22px;bottom:-6px;width:10px;height:10px;
+  background:rgba(14,7,8,.96);border-right:1px solid var(--cinnabar);
+  border-bottom:1px solid var(--cinnabar);transform:rotate(45deg);
+}
+.blessing-bubble p{margin:0 0 4px;letter-spacing:.04em}
+.blessing-bubble p:last-of-type{margin-bottom:8px;color:var(--dim);font-size:12.5px}
+.bless-btn{
+  display:block;width:100%;padding:5px 8px;background:var(--dried);border:1px solid var(--cinnabar);
+  color:var(--paper);font:inherit;font-size:13px;font-weight:600;letter-spacing:.12em;text-align:center;
+  cursor:pointer;transition:background .2s,color .2s;-webkit-tap-highlight-color:transparent;
+}
+.bless-btn:hover,.bless-btn:focus-visible{background:var(--cinnabar);color:var(--ink);outline:none}
+.blessing-cat-body{width:58px;height:34px;margin-right:4px}
+.blessing-cat-wrap.show .blessing-cat-body{animation:blessingWalk .42s ease-out}
+.blessing-cat-body svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 6px rgba(0,0,0,.85))}
+.blessing-cat-body .eye{transform-box:fill-box;transform-origin:center;animation:blink 6s infinite}
+.blessing-cat-body .tail{transform-box:fill-box;transform-origin:0 100%;animation:flick 3.4s ease-in-out infinite}
+@keyframes blessingWalk{0%,100%{transform:translateY(0)}35%{transform:translateY(-4px) rotate(-2deg)}70%{transform:translateY(-2px) rotate(1deg)}}
+@media(prefers-reduced-motion:reduce){
+ .blessing-cat-wrap,.blessing-bubble,.blessing-cat-wrap.show .blessing-cat-body{transition:none;animation:none}
+}
+
 </style>
 </head>
 <body>
@@ -370,6 +418,8 @@ main{position:relative}
     btn.classList.toggle('bad',i>=7);
     btn.classList.remove('shake');
     busy=false;
+    // 籤文與按鈕狀態更新完成後才通知擋煞小貓模組
+    btn.dispatchEvent(new CustomEvent('lotResultReady', { detail: { result: F[i][0] } }));
   }
   btn.addEventListener('click',function(){
     if(busy)return;
@@ -380,5 +430,129 @@ main{position:relative}
   });
 })();
 </script>
+
+<script>
+/* 大凶小貓擋煞模組：只在抽籤結果確定為「大凶／大兇」時出現 */
+(function(){
+  const drawBtn=document.getElementById('draw');
+  const wordEl=document.getElementById('word');
+  const wrapEl=document.querySelector('.talisman-wrap');
+  if(!drawBtn||!wordEl||!wrapEl)return;
+
+  const stage=document.createElement('div');
+  stage.className='blessing-stage';
+  stage.innerHTML=`
+    <div class="blessing-cat-wrap" id="blessingCat" aria-live="polite">
+      <div class="blessing-bubble">
+        <p>「喵嗚……借你三分福氣。」</p>
+        <p>「今日不順，便由我替你擋一擋。且隨我再求一籤，莫將此卦放在心上。」</p>
+        <button type="button" class="bless-btn" id="acceptBlessBtn">〔接受小貓的祝福〕</button>
+      </div>
+      <div class="blessing-cat-body" aria-hidden="true">
+        <svg viewBox="0 0 64 36">
+          <path class="tail" d="M48 26 Q60 22 58 10" fill="none" stroke="#180b0d" stroke-width="4.5" stroke-linecap="round"/>
+          <ellipse cx="34" cy="24" rx="15" ry="9" fill="#180b0d" stroke="#a3121a" stroke-width="1"/>
+          <rect x="21" y="27" width="3.5" height="7" rx="1.7" fill="#180b0d"/>
+          <rect x="27" y="28" width="3.5" height="6" rx="1.7" fill="#180b0d"/>
+          <rect x="38" y="28" width="3.5" height="6" rx="1.7" fill="#180b0d"/>
+          <rect x="44" y="27" width="3.5" height="7" rx="1.7" fill="#180b0d"/>
+          <polygon points="12,15 14,4 22,11" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
+          <polygon points="21,11 27,4 28,15" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
+          <circle cx="20" cy="18" r="9.5" fill="#180b0d" stroke="#a3121a" stroke-width="1"/>
+          <path d="M14 25 Q20 28 27 25" fill="none" stroke="#d4222b" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="19" cy="27.5" r="2.2" fill="#e8d9c4"/>
+          <circle class="eye" cx="16.5" cy="17.5" r="1.6" fill="#d4222b"/>
+          <circle class="eye" cx="22.5" cy="17.5" r="1.6" fill="#d4222b"/>
+          <polygon points="18.5,20 20.5,20 19.5,21.4" fill="#e8d9c4"/>
+        </svg>
+      </div>
+    </div>`;
+  document.body.appendChild(stage);
+
+  const catWrap=document.getElementById('blessingCat');
+  const acceptBtn=document.getElementById('acceptBlessBtn');
+  let isCatVisible=false;
+  let isBlessingRedraw=false;
+  let redrawCount=0;
+  let redrawTimer=null;
+  let showTimer=null;
+
+  function positionStage(){
+    const rect=wrapEl.getBoundingClientRect();
+    stage.style.top=Math.max(0,rect.bottom-4)+'px';
+    stage.style.left=(rect.left+rect.width/2)+'px';
+  }
+
+  function isGreatMisfortune(){
+    const text=(wordEl.textContent||'').replace(/\s+/g,'');
+    return text==='大凶'||text==='大兇';
+  }
+  function showCat(){
+    catWrap.classList.remove('leaving');
+    catWrap.classList.add('show');
+    isCatVisible=true;
+  }
+  function hideCat(){
+    if(!isCatVisible){
+      catWrap.classList.remove('show');
+      return;
+    }
+    isCatVisible=false;
+    catWrap.classList.remove('show');
+    catWrap.classList.add('leaving');
+  }
+
+  // 點擊抽籤時先收起小貓；新結果更新後再由 lotResultReady 判斷
+  drawBtn.addEventListener('click',function(){
+    clearTimeout(redrawTimer);
+    clearTimeout(showTimer);
+    hideCat();
+  });
+
+  drawBtn.addEventListener('lotResultReady',function(){
+    if(!drawBtn.classList.contains('open'))return;
+    if(isGreatMisfortune()){
+      if(isBlessingRedraw && redrawCount<15){
+        redrawCount++;
+        redrawTimer=setTimeout(function(){drawBtn.click();},80);
+        return;
+      }
+      if(!isBlessingRedraw){
+        positionStage();
+        showTimer=setTimeout(function(){
+          if(isGreatMisfortune() && drawBtn.classList.contains('open')){
+            positionStage();
+            showCat();
+          }
+        },1500); // 大凶出現後等待 1.5 秒才顯示小貓
+      }
+    }
+    isBlessingRedraw=false;
+    redrawCount=0;
+  });
+
+  // 使用者開始往下滑時，立即收起小貓與對話框
+  window.addEventListener('scroll',function(){
+    if(isCatVisible || showTimer){
+      clearTimeout(showTimer);
+      showTimer=null;
+      hideCat();
+    }
+  },{passive:true});
+  window.addEventListener('resize',function(){
+    if(isCatVisible)positionStage();
+  },{passive:true});
+
+  acceptBtn.addEventListener('click',function(e){
+    e.stopPropagation();
+    hideCat();
+    isBlessingRedraw=true;
+    redrawCount=0;
+    clearTimeout(redrawTimer);
+    redrawTimer=setTimeout(function(){drawBtn.click();},260);
+  });
+})();
+</script>
+
 </body>
 </html>
