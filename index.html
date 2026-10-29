@@ -187,10 +187,11 @@ main{position:relative}
 .blessing-cat-body svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 6px rgba(0,0,0,.85))}
 .blessing-cat-wrap.left .blessing-cat-body svg{transform:scaleX(-1)}
 .blessing-cat-body .eye{transform-box:fill-box;transform-origin:center;animation:blink 6s infinite}
-.blessing-cat-body .tail{transform-box:fill-box;transform-origin:0 100%;animation:flick 3.4s ease-in-out infinite}
+.blessing-cat-body .tail{transform-box:fill-box;transform-origin:100% 15%;animation:curlSway 5s ease-in-out infinite}
 .blessing-cat-wrap.black .blessing-cat-body .tail{animation:flickAnnoyed 2.2s ease-in-out infinite}
 @keyframes blessingWalk{0%,100%{transform:translateY(0)}35%{transform:translateY(-4px) rotate(-2deg)}70%{transform:translateY(-2px) rotate(1deg)}}
-@keyframes flickAnnoyed{0%,58%,100%{transform:rotate(0)}68%{transform:rotate(-18deg)}78%{transform:rotate(5deg)}88%{transform:rotate(-13deg)}}
+@keyframes curlSway{0%,100%{transform:rotate(0)}50%{transform:rotate(-2deg)}}
+@keyframes flickAnnoyed{0%,58%,100%{transform:rotate(0)}68%{transform:rotate(-6deg)}78%{transform:rotate(2deg)}88%{transform:rotate(-5deg)}}
 @media(prefers-reduced-motion:reduce){
  .blessing-cat-wrap,.blessing-bubble,.blessing-cat-wrap.show .blessing-cat-body,.blessing-cat-body .tail{transition:none;animation:none}
 }
@@ -581,12 +582,9 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
       </div>
       <div class="blessing-cat-body" aria-hidden="true">
         <svg viewBox="0 0 64 36">
-          <path class="tail" d="M48 26 Q60 22 58 10" fill="none" stroke="#180b0d" stroke-width="4.5" stroke-linecap="round"/>
           <ellipse cx="34" cy="24" rx="15" ry="9" fill="#180b0d" stroke="#a3121a" stroke-width="1"/>
-          <rect x="21" y="27" width="3.5" height="7" rx="1.7" fill="#180b0d"/>
-          <rect x="27" y="28" width="3.5" height="6" rx="1.7" fill="#180b0d"/>
-          <rect x="38" y="28" width="3.5" height="6" rx="1.7" fill="#180b0d"/>
-          <rect x="44" y="27" width="3.5" height="7" rx="1.7" fill="#180b0d"/>
+          <path class="tail" d="M48.5 25 Q52.5 29 47 33 Q41 35 34.5 33.2" fill="none" stroke="#a3121a" stroke-width="5" stroke-linecap="round"/>
+          <path class="tail" d="M48.5 25 Q52.5 29 47 33 Q41 35 34.5 33.2" fill="none" stroke="#180b0d" stroke-width="3.4" stroke-linecap="round"/>
           <polygon points="11,16 9,7 21,11" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
           <polygon points="21,11 31,7 29,16" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
           <circle cx="20" cy="18" r="9.5" fill="#180b0d" stroke="#a3121a" stroke-width="1"/>
@@ -600,14 +598,14 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
     <div class="blessing-cat-wrap white" id="blessingWhite" aria-live="polite">
       <div class="blessing-bubble">
         <p>「喵嗚……借你三分福氣。」</p>
-        <p>「今日不順，便由我替你擋一擋。且隨我再求一籤，莫將此卦放在心上。」</p>
+        <p>「今日不順，便由我替你擋一擋。且隨我再求一籤，莫將此卦放心上。」</p>
         <button type="button" class="bless-btn">〔接受小貓的祝福〕</button>
       </div>
       <div class="blessing-cat-body" aria-hidden="true">
         <svg viewBox="0 0 64 36">
-          <path class="tail" d="M48 26 Q60 22 58 10" fill="none" stroke="#a3121a" stroke-width="5.6" stroke-linecap="round"/>
-          <path class="tail" d="M48 26 Q60 22 58 10" fill="none" stroke="#e8d9c4" stroke-width="4" stroke-linecap="round"/>
           <ellipse cx="34" cy="24" rx="15" ry="9" fill="#e8d9c4" stroke="#a3121a" stroke-width="1"/>
+          <path class="tail" d="M48.5 25 Q52.5 29 47 33 Q41 35 34.5 33.2" fill="none" stroke="#a3121a" stroke-width="5" stroke-linecap="round"/>
+          <path class="tail" d="M48.5 25 Q52.5 29 47 33 Q41 35 34.5 33.2" fill="none" stroke="#e8d9c4" stroke-width="3.4" stroke-linecap="round"/>
           <polygon points="12,15 14,4 22,11" fill="#e8d9c4" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
           <polygon points="21,11 27,4 28,15" fill="#e8d9c4" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
           <polygon points="14.2,12 14.9,7.4 18.6,10.8" fill="#d9a49c"/>
