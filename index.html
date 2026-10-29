@@ -136,20 +136,22 @@ main{position:relative}
 @media (prefers-reduced-motion:reduce){.talisman-wrap,.talisman.shake,.tag,section:last-of-type .tag,.cat .eye,.cat .tail,.altar.on .coin-btn .coin,.altar.on .stick::after{animation:none}}
 @media (min-width:640px){body{font-size:17px}.talisman{width:150px}.talisman .word{font-size:68px}}
 
-/* 大凶擋煞小貓：固定在視窗最上層，避免被香爐等元素遮住 */
+/* 擋煞小貓（右：白貓／大凶；左：黑貓／凶）：固定在視窗最上層，避免被香爐等元素遮住 */
 .blessing-stage{
   position:fixed;top:0;left:50%;
   width:min(340px,calc(100vw - 40px));height:160px;
   transform:translateX(-50%);pointer-events:none;z-index:2147483647;
 }
 .blessing-cat-wrap{
+  --enter:42px;
   position:absolute;right:4px;bottom:0;
   display:flex;flex-direction:column;align-items:flex-end;
-  opacity:0;visibility:hidden;transform:translateX(42px);
+  opacity:0;visibility:hidden;transform:translateX(var(--enter));
   transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .3s ease,visibility .45s;
 }
+.blessing-cat-wrap.left{--enter:-42px;right:auto;left:4px;align-items:flex-start}
 .blessing-cat-wrap.show{opacity:1;visibility:visible;transform:translateX(0)}
-.blessing-cat-wrap.leaving{opacity:0;visibility:hidden;transform:translateX(36px);transition:transform .3s ease-in,opacity .22s ease,visibility .3s}
+.blessing-cat-wrap.leaving{opacity:0;visibility:hidden;transform:translateX(calc(var(--enter)*.86));transition:transform .3s ease-in,opacity .22s ease,visibility .3s}
 .blessing-bubble{
   position:relative;width:min(208px,calc(100vw - 64px));margin-bottom:4px;padding:7px 10px;
   background:rgba(14,7,8,.96);border:1px solid var(--cinnabar);
@@ -165,6 +167,7 @@ main{position:relative}
   background:rgba(14,7,8,.96);border-right:1px solid var(--cinnabar);
   border-bottom:1px solid var(--cinnabar);transform:rotate(45deg);
 }
+.blessing-cat-wrap.left .blessing-bubble:after{right:auto;left:50px}
 .blessing-bubble p{margin:0 0 3px;letter-spacing:.03em}
 .blessing-bubble p:last-of-type{margin-bottom:6px;color:var(--dim);font-size:10.5px}
 .bless-btn{
@@ -173,14 +176,23 @@ main{position:relative}
   cursor:pointer;transition:background .2s,color .2s;-webkit-tap-highlight-color:transparent;
 }
 .bless-btn:hover,.bless-btn:focus-visible{background:var(--cinnabar);color:var(--ink);outline:none}
+/* 白貓（溫柔）：氣泡邊框改成宣紙色，和黑貓對應 */
+.blessing-cat-wrap.white .blessing-bubble{border-color:#cdbfae;box-shadow:0 6px 22px rgba(0,0,0,.8),inset 0 0 0 1px rgba(205,191,174,.22)}
+.blessing-cat-wrap.white .blessing-bubble:after{border-right-color:#cdbfae;border-bottom-color:#cdbfae}
+.blessing-cat-wrap.white .bless-btn{border-color:#cdbfae;background:rgba(232,217,196,.1)}
+.blessing-cat-wrap.white .bless-btn:hover,.blessing-cat-wrap.white .bless-btn:focus-visible{background:#e8d9c4;color:var(--ink)}
+.blessing-cat-wrap.black .blessing-bubble p:first-of-type{font-weight:600}
 .blessing-cat-body{width:88px;height:50px;margin-right:0}
 .blessing-cat-wrap.show .blessing-cat-body{animation:blessingWalk .42s ease-out}
 .blessing-cat-body svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 6px rgba(0,0,0,.85))}
+.blessing-cat-wrap.left .blessing-cat-body svg{transform:scaleX(-1)}
 .blessing-cat-body .eye{transform-box:fill-box;transform-origin:center;animation:blink 6s infinite}
 .blessing-cat-body .tail{transform-box:fill-box;transform-origin:0 100%;animation:flick 3.4s ease-in-out infinite}
+.blessing-cat-wrap.black .blessing-cat-body .tail{animation:flickAnnoyed 2.2s ease-in-out infinite}
 @keyframes blessingWalk{0%,100%{transform:translateY(0)}35%{transform:translateY(-4px) rotate(-2deg)}70%{transform:translateY(-2px) rotate(1deg)}}
+@keyframes flickAnnoyed{0%,58%,100%{transform:rotate(0)}68%{transform:rotate(-18deg)}78%{transform:rotate(5deg)}88%{transform:rotate(-13deg)}}
 @media(prefers-reduced-motion:reduce){
- .blessing-cat-wrap,.blessing-bubble,.blessing-cat-wrap.show .blessing-cat-body{transition:none;animation:none}
+ .blessing-cat-wrap,.blessing-bubble,.blessing-cat-wrap.show .blessing-cat-body,.blessing-cat-body .tail{transition:none;animation:none}
 }
 
 /* ===== 廟門開場 ===== */
@@ -525,7 +537,9 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
       reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
   function reveal(){
     var i;
-    do{i=Math.floor(Math.random()*F.length);}while(i===last);
+    var avoid=btn.getAttribute('data-avoid-bad')==='1';
+    btn.removeAttribute('data-avoid-bad');
+    do{i=Math.floor(Math.random()*F.length);}while(i===last||(avoid&&i>=7));
     last=i;
     word.textContent=F[i][0];
     hint.textContent=F[i][1];
@@ -549,7 +563,7 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
 </script>
 
 <script>
-/* 大凶小貓擋煞模組：只在抽籤結果確定為「大凶／大兇」時出現 */
+/* 擋煞小貓模組：大凶 → 右側白貓（溫柔）；凶 → 左側黑貓（暴躁）。重抽時不會再出現小貓 */
 (function(){
   const drawBtn=document.getElementById('draw');
   const wordEl=document.getElementById('word');
@@ -559,11 +573,11 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
   const stage=document.createElement('div');
   stage.className='blessing-stage';
   stage.innerHTML=`
-    <div class="blessing-cat-wrap" id="blessingCat" aria-live="polite">
+    <div class="blessing-cat-wrap left black" id="blessingBlack" aria-live="polite">
       <div class="blessing-bubble">
-        <p>「喵嗚……借你三分福氣。」</p>
-        <p>「今日不順，便由我替你擋一擋。且隨我再求一籤，莫將此卦放在心上。」</p>
-        <button type="button" class="bless-btn" id="acceptBlessBtn">〔接受小貓的祝福〕</button>
+        <p>「哼，區區一個凶，也敢上門。」</p>
+        <p>「有本貓在，晦氣退散。<br>去，再抽一支。」</p>
+        <button type="button" class="bless-btn">〔請貓大人重抽〕</button>
       </div>
       <div class="blessing-cat-body" aria-hidden="true">
         <svg viewBox="0 0 64 36">
@@ -573,22 +587,44 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
           <rect x="27" y="28" width="3.5" height="6" rx="1.7" fill="#180b0d"/>
           <rect x="38" y="28" width="3.5" height="6" rx="1.7" fill="#180b0d"/>
           <rect x="44" y="27" width="3.5" height="7" rx="1.7" fill="#180b0d"/>
-          <polygon points="12,15 14,4 22,11" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
-          <polygon points="21,11 27,4 28,15" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
+          <polygon points="11,16 9,7 21,11" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
+          <polygon points="21,11 31,7 29,16" fill="#180b0d" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
           <circle cx="20" cy="18" r="9.5" fill="#180b0d" stroke="#a3121a" stroke-width="1"/>
           <path d="M14 25 Q20 28 27 25" fill="none" stroke="#d4222b" stroke-width="2" stroke-linecap="round"/>
           <circle cx="19" cy="27.5" r="2.2" fill="#e8d9c4"/>
-          <circle class="eye" cx="16.5" cy="17.5" r="1.6" fill="#d4222b"/>
-          <circle class="eye" cx="22.5" cy="17.5" r="1.6" fill="#d4222b"/>
-          <polygon points="18.5,20 20.5,20 19.5,21.4" fill="#e8d9c4"/>
+          <path d="M14.4 17.6 H18.2 M21.8 17.6 H25.6" stroke="#d4222b" stroke-width="1.1" stroke-linecap="round"/>
+          <polygon points="18.5,20.2 20.5,20.2 19.5,21.5" fill="#e8d9c4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="blessing-cat-wrap white" id="blessingWhite" aria-live="polite">
+      <div class="blessing-bubble">
+        <p>「喵嗚……借你三分福氣。」</p>
+        <p>「今日不順，便由我替你擋一擋。且隨我再求一籤，莫將此卦放在心上。」</p>
+        <button type="button" class="bless-btn">〔接受小貓的祝福〕</button>
+      </div>
+      <div class="blessing-cat-body" aria-hidden="true">
+        <svg viewBox="0 0 64 36">
+          <path class="tail" d="M48 26 Q60 22 58 10" fill="none" stroke="#a3121a" stroke-width="5.6" stroke-linecap="round"/>
+          <path class="tail" d="M48 26 Q60 22 58 10" fill="none" stroke="#e8d9c4" stroke-width="4" stroke-linecap="round"/>
+          <ellipse cx="34" cy="24" rx="15" ry="9" fill="#e8d9c4" stroke="#a3121a" stroke-width="1"/>
+          <polygon points="12,15 14,4 22,11" fill="#e8d9c4" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
+          <polygon points="21,11 27,4 28,15" fill="#e8d9c4" stroke="#a3121a" stroke-width="1" stroke-linejoin="round"/>
+          <polygon points="14.2,12 14.9,7.4 18.6,10.8" fill="#d9a49c"/>
+          <polygon points="23.4,10.8 26,7.6 26.4,12.6" fill="#d9a49c"/>
+          <circle cx="20" cy="18" r="9.5" fill="#e8d9c4" stroke="#a3121a" stroke-width="1"/>
+          <path d="M14 25 Q20 28 27 25" fill="none" stroke="#a3121a" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="19" cy="27.5" r="2.2" fill="#d8a93a" stroke="#7a4f0e" stroke-width=".5"/>
+          <circle class="eye" cx="16.5" cy="17.5" r="1.7" fill="#3a0a0e"/>
+          <circle class="eye" cx="22.5" cy="17.5" r="1.7" fill="#3a0a0e"/>
+          <circle cx="17" cy="16.9" r=".55" fill="#e8d9c4"/><circle cx="23" cy="16.9" r=".55" fill="#e8d9c4"/>
+          <polygon points="18.6,20 20.4,20 19.5,21.2" fill="#d98f8a"/>
         </svg>
       </div>
     </div>`;
   document.body.appendChild(stage);
 
-  const catWrap=document.getElementById('blessingCat');
-  const acceptBtn=document.getElementById('acceptBlessBtn');
-  let isCatVisible=false;
+  const cats={white:document.getElementById('blessingWhite'),black:document.getElementById('blessingBlack')};
   let isBlessingRedraw=false;
   let redrawTimer=null;
   let showTimer=null;
@@ -598,24 +634,28 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
     stage.style.top=Math.max(0,rect.bottom-4)+'px';
     stage.style.left=(rect.left+rect.width/2)+'px';
   }
-
-  function isGreatMisfortune(){
+  // 'white'＝大凶，'black'＝凶，其他＝不出現
+  function kindOfResult(){
     const text=(wordEl.textContent||'').replace(/\s+/g,'');
-    return text==='大凶'||text==='大兇';
+    if(text==='大凶'||text==='大兇')return 'white';
+    if(text==='凶'||text==='兇')return 'black';
+    return null;
   }
-  function showCat(){
-    catWrap.classList.remove('leaving');
-    catWrap.classList.add('show');
-    isCatVisible=true;
+  function anyVisible(){return cats.white.classList.contains('show')||cats.black.classList.contains('show');}
+  function showCat(k){
+    hideCat();
+    const el=cats[k];
+    el.classList.remove('leaving');
+    el.classList.add('show');
   }
   function hideCat(){
-    if(!isCatVisible){
-      catWrap.classList.remove('show');
-      return;
-    }
-    isCatVisible=false;
-    catWrap.classList.remove('show');
-    catWrap.classList.add('leaving');
+    ['white','black'].forEach(function(k){
+      const el=cats[k];
+      if(el.classList.contains('show')){
+        el.classList.remove('show');
+        el.classList.add('leaving');
+      }
+    });
   }
 
   // 點擊抽籤時先收起小貓；新結果更新後再由 lotResultReady 判斷
@@ -627,38 +667,40 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
 
   drawBtn.addEventListener('lotResultReady',function(){
     if(!drawBtn.classList.contains('open'))return;
-    if(isGreatMisfortune()){
-      if(!isBlessingRedraw){
-        positionStage();
-        showTimer=setTimeout(function(){
-          if(isGreatMisfortune() && drawBtn.classList.contains('open')){
-            positionStage();
-            showCat();
-          }
-        },1500); // 大凶出現後等待 1.5 秒才顯示小貓
-      }
+    const k=kindOfResult();
+    if(k && !isBlessingRedraw){
+      positionStage();
+      showTimer=setTimeout(function(){
+        if(kindOfResult()===k && drawBtn.classList.contains('open')){
+          positionStage();
+          showCat(k);
+        }
+      },1500); // 凶／大凶出現後等待 1.5 秒才顯示小貓
     }
     isBlessingRedraw=false;
   });
 
   // 使用者開始往下滑時，立即收起小貓與對話框
   window.addEventListener('scroll',function(){
-    if(isCatVisible || showTimer){
+    if(anyVisible() || showTimer){
       clearTimeout(showTimer);
       showTimer=null;
       hideCat();
     }
   },{passive:true});
   window.addEventListener('resize',function(){
-    if(isCatVisible)positionStage();
+    if(anyVisible())positionStage();
   },{passive:true});
 
-  acceptBtn.addEventListener('click',function(e){
-    e.stopPropagation();
-    hideCat();
-    isBlessingRedraw=true;
-    clearTimeout(redrawTimer);
-    redrawTimer=setTimeout(function(){drawBtn.click();},260);
+  [].forEach.call(stage.querySelectorAll('.bless-btn'),function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      hideCat();
+      isBlessingRedraw=true;
+      drawBtn.setAttribute('data-avoid-bad','1'); // 重抽時保證不會再抽到凶／大凶
+      clearTimeout(redrawTimer);
+      redrawTimer=setTimeout(function(){drawBtn.click();},260);
+    });
   });
 })();
 </script>
