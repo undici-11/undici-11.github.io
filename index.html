@@ -60,7 +60,7 @@ p{margin:0 0 10px}
 .chips span.hot{background:var(--dried)}
 .note{margin-top:14px;padding:12px 14px;border-left:3px solid var(--cinnabar);color:var(--dim);font-size:14px;line-height:1.8}
 
-.btn{display:inline-block;margin-top:6px;padding:10px 20px;background:var(--cinnabar);color:var(--ink);font-weight:900;letter-spacing:.2em;text-decoration:none}
+.btn{display:inline-block;margin-top:6px;padding:4px 13px;background:var(--cinnabar);color:var(--ink);font-size:13px;line-height:1.7;font-weight:900;letter-spacing:.15em;text-decoration:none}
 .btn:hover{background:var(--paper)}
 a:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
 
@@ -268,6 +268,10 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
   html.door-reveal main{animation:none}
 }
 
+
+/* 屍檢器械箱（委託區塊右下角，一直打開、無動畫） */
+.kit-box{position:absolute;right:36px;bottom:14px;width:min(112px,31vw);pointer-events:none}
+.kit-box svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 0 10px rgba(212,34,43,.2))}
 </style>
 </head>
 <body>
@@ -372,6 +376,60 @@ html.door-reveal main{animation:doorReveal 2s cubic-bezier(.25,.1,.25,1) both}
     <h2>委託</h2>
     <p>OC屍檢報告委託</p>
     <a class="btn" href="https://undici-11.github.io/OC-Autopsy-Report-Commission/" target="_blank" rel="noopener noreferrer">前往委託頁</a>
+    <div class="kit-box" role="img" aria-label="屍檢器械箱（已打開）">
+    <svg viewBox="0 -12 240 184" aria-hidden="true">
+      <defs><linearGradient id="akSteel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2dad0"/><stop offset=".5" stop-color="#a39b93"/><stop offset="1" stop-color="#5f5852"/></linearGradient></defs>
+      <ellipse cx="120" cy="166" rx="112" ry="5" fill="#000" opacity=".55"/>
+      <path d="M14 75H226L234 156Q234 162 228 162H12Q6 162 6 156Z" fill="#120708" stroke="#a3121a" stroke-width="1.5" stroke-linejoin="round"/>
+      <g>
+      <!-- 鉸鏈與已打開的扣 -->
+      <rect x="18" y="70" width="204" height="5" rx="1" fill="#2a1b1b" stroke="#a3121a" stroke-width=".8"/>
+      <rect x="56" y="68" width="10" height="9" rx="1.5" fill="url(#akSteel)"/><rect x="174" y="68" width="10" height="9" rx="1.5" fill="url(#akSteel)"/>
+      <path d="M22 82H218L224 154H16Z" fill="#1c0c0d" stroke="#3a0a0e"/>
+      <g fill="#0a0506" stroke="#3a0a0e" stroke-width=".6"><rect x="28" y="86" width="184" height="20" rx="4"/><rect x="28" y="110" width="184" height="20" rx="4"/><rect x="28" y="134" width="184" height="17" rx="4"/></g>
+      <!-- 骨鋸 -->
+      <rect x="34" y="89" width="34" height="14" rx="6" fill="#2a1b1b" stroke="#a3121a" stroke-width=".8"/>
+      <path d="M42 91v10M47 91v10M52 91v10M57 91v10" stroke="#3a0a0e" stroke-width="1"/>
+      <rect x="68" y="92" width="132" height="5" fill="url(#akSteel)"/>
+      <path d="M72 97l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5l4 5l4-5Z" fill="#a39b93"/>
+      <!-- 肋骨剪 -->
+      <g fill="none" stroke-linecap="round"><path d="M100 120L42 113M100 120L42 127" stroke="#a3121a" stroke-width="6"/><path d="M100 120L42 113M100 120L42 127" stroke="#2a1b1b" stroke-width="4"/></g>
+      <g fill="none" stroke="#b5ada4" stroke-width="1.6"><ellipse cx="35" cy="113" rx="5.5" ry="3.4"/><ellipse cx="35" cy="127" rx="5.5" ry="3.4"/></g>
+      <path d="M100 116L176 117.5Q182 120 176 122.5L100 124Z" fill="url(#akSteel)"/>
+      <path d="M100 120H180" stroke="#3a0a0e" stroke-width=".8"/>
+      <circle cx="100" cy="120" r="3.2" fill="#e8d9c4" stroke="#5f5852"/>
+      <!-- 手術刀 -->
+      <rect x="34" y="139" width="36" height="7" rx="3" fill="#2a1b1b" stroke="#a3121a" stroke-width=".8"/>
+      <path d="M52 140v5M55 140v5M58 140v5M61 140v5" stroke="#3a0a0e" stroke-width=".9"/>
+      <polygon points="70,141 80,141.5 80,143.5 70,144" fill="#a39b93"/>
+      <path d="M80 141.2H98Q104 141.6 106 146Q92 146.4 80 143.8Z" fill="url(#akSteel)"/>
+      <!-- 鑷子 -->
+      <path d="M120 140.5L180 142.5M120 145L180 142.5M120 140.5Q115 142.8 120 145" fill="none" stroke="#b5ada4" stroke-width="2" stroke-linecap="round"/>
+      <!-- 刀片盒 -->
+      <rect x="190" y="137" width="20" height="11" rx="1" fill="#e8d9c4"/><rect x="190" y="140" width="20" height="2.5" fill="#d4222b"/>
+      </g>
+      <g>
+        <g>
+      <path d="M34 6H206Q212 6 212 12L222 70H18L28 12Q28 6 34 6Z" fill="#120708" stroke="#a3121a" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M40 13H200L207 64H33Z" fill="#1c0c0d" stroke="#3a0a0e"/>
+      <rect x="60" y="22" width="4" height="38" rx="1.5" fill="#8a6a52"/>
+      <rect x="51" y="15" width="22" height="9" rx="1.5" fill="url(#akSteel)"/>
+      <rect x="89" y="18" width="6" height="14" fill="#2a1b1b"/>
+      <polygon points="89,32 95,32 95,50 92,60 89,50" fill="url(#akSteel)"/>
+      <path d="M122.5 60L120 22Q123 12 126 22L123.5 60" fill="none" stroke="#b5ada4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="148" y="16" width="4" height="10" rx="2" fill="#2a1b1b"/>
+      <path d="M150 26V58" stroke="#b5ada4" stroke-width="1.6"/>
+      <circle cx="150" cy="60" r="2.2" fill="#d9d2c8"/>
+      <rect x="176" y="16" width="6" height="14" rx="2" fill="#2a1b1b" stroke="#a3121a" stroke-width=".6"/>
+      <path d="M177 30H181V58Q179 64 177 58Z" fill="url(#akSteel)"/>
+      <g fill="#a3121a"><rect x="44" y="26" width="152" height="5" rx="1"/><rect x="44" y="47" width="152" height="5" rx="1"/></g>
+      <g fill="#e8d9c4"><circle cx="48" cy="28.5" r="1.3"/><circle cx="192" cy="28.5" r="1.3"/><circle cx="48" cy="49.5" r="1.3"/><circle cx="192" cy="49.5" r="1.3"/></g>
+      <g fill="none" stroke-linecap="round"><path d="M94 6V-1Q94 -6 99 -6H141Q146 -6 146 -1V6" stroke="#a3121a" stroke-width="5"/><path d="M94 6V-1Q94 -6 99 -6H141Q146 -6 146 -1V6" stroke="#2a1b1b" stroke-width="3.2"/></g>
+      <rect x="90" y="3" width="8" height="7" rx="1.5" fill="url(#akSteel)"/><rect x="142" y="3" width="8" height="7" rx="1.5" fill="url(#akSteel)"/>
+        </g>
+      </g>
+    </svg>
+    </div>
   </section>
 
   <section>
