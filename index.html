@@ -458,7 +458,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;-webkit-use
 
 /* 十一捏捏 */
 .nini{display:flex;align-items:flex-start;gap:12px;margin:30px 0 0}
-.nini-btn{position:relative;flex:none;width:180px;padding:0;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.nini-btn{position:relative;flex:none;width:200px;padding:0;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .nini-btn img{display:block;width:100%;height:auto}
 .nini-btn .n2{position:absolute;inset:0;opacity:0}
 .nini-btn.bad .n1{opacity:0}.nini-btn.bad .n2{opacity:1}
@@ -504,6 +504,9 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;-webkit-use
 @keyframes fuFlutter{0%,100%{transform:rotate(-4deg) skewY(1deg)}50%{transform:rotate(4deg) skewY(-1deg)}}
 @media (prefers-reduced-motion:reduce){.hang>.fu{animation:none}}
 .hang>.ybead{width:4px;height:4px;margin-left:-2px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f0d58c,#c8a660 55%,#8a6a2e);box-shadow:0 0 4px rgba(200,166,96,.55)}
+a.file-btn{text-decoration:none;margin-top:6px}
+a.file-btn:focus-visible{outline:2px solid var(--paper);outline-offset:2px}
+.nini-say{padding:6px 10px;font-size:12px;letter-spacing:0;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -601,7 +604,7 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;-webkit-use
     <span class="tag" aria-hidden="true">契約</span>
     <h2>委託</h2>
     <p>OC屍檢報告委託</p>
-    <a class="btn" href="https://undici-11.github.io/OC-Autopsy-Report-Commission/" target="_blank" rel="noopener noreferrer">前往委託頁</a>
+    <a class="file-btn" href="https://undici-11.github.io/OC-Autopsy-Report-Commission/" target="_blank" rel="noopener noreferrer">前往委託頁</a>
     <div class="kit-box" role="img" aria-label="屍檢器械箱（已打開）">
     <svg viewBox="0 -12 240 184" aria-hidden="true">
       <defs><linearGradient id="akSteel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2dad0"/><stop offset=".5" stop-color="#a39b93"/><stop offset="1" stop-color="#5f5852"/></linearGradient></defs>
