@@ -559,6 +559,10 @@ body{overflow-x:clip}
 @media (min-width:640px){.cloth-top{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}}
 /* 區塊半透明，讓背景透出 */
 section{background:rgba(14,7,8,.8);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.plain ul li{font-size:13.5px;line-height:1.75}
+.plain ul li::before{top:.6em}
+.no ul li{padding-left:1.4em}
+.no ul li::before{top:.05em;font-size:11px}
 </style>
 </head>
 <body>
@@ -729,7 +733,9 @@ section{background:rgba(14,7,8,.8);-webkit-backdrop-filter:blur(3px);backdrop-fi
     <h2>界線</h2>
     <p style="color:var(--dim);font-size:14px">以下是本人可能會引起你不適的成分，请自行规避。</p>
     <ul class="plain">
-      <li>現實有同居對象，偶爾出現沙雕閃光內容</li>
+      <li>會使用 AI 生成寫實照片
+        <ul><li>僅以文字描述生成，無融圖、無使用他人照片</li></ul>
+      </li>
       <li>語言混用：中國用語 / 支語 / 簡繁混寫（例：假發、蓬松）</li>
       <li>職業法醫，偶爾分享過往案件經過，含黑色幽默 / 地獄笑話（不代表我對死者不敬；不雙標，版上也很多關於自己的地獄笑話）
         <ul><li>若加我是為了了解法醫相關知識與案件，還請移步至 IG［undici_0011］，我通常會發在 IG 快拍，極少發在 FB</li></ul>
